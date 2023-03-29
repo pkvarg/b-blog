@@ -1,12 +1,20 @@
 import { useState } from 'react'
+import { Home, Login, CreateBlog } from './pages'
+// Import the functions you need from the SDKs you need
+import { initializeApp } from 'firebase/app'
+import { getAnalytics } from 'firebase/analytics'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [isAuth, setIsAuth] = useState(false)
   return (
-    <div className='App'>
-      <h1 className='text-center'>New Project</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login setIsAuth={setIsAuth} />} />
+        <Route path='/create-blog' element={<CreateBlog />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 
