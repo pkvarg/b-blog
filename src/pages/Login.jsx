@@ -21,11 +21,17 @@ const Login = ({ setIsAuth }) => {
 
   return (
     <>
-      <p className='text-center m-4'>Login</p>
-      <div className='flex flex-col gap-4 m-4 items-start'>
-        <button onClick={() => navigate('/')}>Home</button>
+      <div className='text-white'>
+        <div className='flex flex-col gap-4 m-4 items-start'>
+          <h1
+            className='text-green text-[25px] ml-6 cursor-pointer'
+            onClick={() => navigate('/')}
+          >
+            Refresh Your Spirit of Faith.
+          </h1>
 
-        <button onClick={signInWithGoogle}>Log in with Google</button>
+          <button onClick={signInWithGoogle}>Log in with Google</button>
+        </div>
       </div>
     </>
   )

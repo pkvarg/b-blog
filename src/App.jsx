@@ -16,7 +16,9 @@ function App() {
           element={<Home isAuth={isAuth} setIsAuth={setIsAuth} />}
         />
         <Route path='/login' element={<Login setIsAuth={setIsAuth} />} />
-        {isAuth && <Route path='/create-blog' element={<CreateBlog />} />}
+        {isAuth && (
+          <Route path='/create-blog' element={<CreateBlog isAuth={isAuth} />} />
+        )}
       </Routes>
     </BrowserRouter>
   )
