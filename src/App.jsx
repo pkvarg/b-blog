@@ -7,12 +7,16 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 function App() {
   const [isAuth, setIsAuth] = useState(false)
+  console.log(isAuth)
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route
+          path='/'
+          element={<Home isAuth={isAuth} setIsAuth={setIsAuth} />}
+        />
         <Route path='/login' element={<Login setIsAuth={setIsAuth} />} />
-        <Route path='/create-blog' element={<CreateBlog />} />
+        {isAuth && <Route path='/create-blog' element={<CreateBlog />} />}
       </Routes>
     </BrowserRouter>
   )
