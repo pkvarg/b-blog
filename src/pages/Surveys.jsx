@@ -1,17 +1,13 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import { NavbarSubSite } from '../components'
 
 const Surveys = () => {
   const navigate = useNavigate()
   return (
     <>
+      <NavbarSubSite />
       <div className='text-white'>
-        <h1
-          className='text-green text-[25px] cursor-pointer'
-          onClick={() => navigate('/')}
-        >
-          Home.
-        </h1>
         <h1 className='text-center text-[50px] p-8'>Surveys</h1>
         <div className='m-8 text-[25px] '>
           <p className='my-5 text-green'>

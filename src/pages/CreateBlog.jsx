@@ -2,14 +2,17 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { addDoc, collection } from 'firebase/firestore'
 import { db, auth } from './../firebaseConfig'
+import { storage } from './../firebaseConfig'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
 const CreateBlog = () => {
   const navigate = useNavigate()
   const [title, setTitle] = useState('')
   const [postIntro, setPostIntro] = useState('')
   const [postText, setPostText] = useState('')
-
   const [isAuth, setIsAuth] = useState()
+  const [image, setImage] = useState(null)
+  const [urlLink, setUrlLink] = useState('')
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('isAuth')
@@ -26,14 +29,51 @@ const CreateBlog = () => {
 
   const postsCollectionRef = collection(db, 'posts')
 
-  const createPost = async () => {
-    await addDoc(postsCollectionRef, {
-      title,
-      postIntro,
-      postText,
-      author: { name: auth.currentUser.displayName, id: auth.currentUser.uid },
-    })
+  const createPost = () => {
+    // await addDoc(postsCollectionRef, {
+    //   title,
+    //   postIntro,
+    //   postText,
+
+    //   author: { name: auth.currentUser.displayName, id: auth.currentUser.uid },
+    // })
+
+    // image to firebase storage
+    const imageRef = ref(storage, 'image')
+    uploadBytes(imageRef, image)
+      .then(() => {
+        getDownloadURL(imageRef)
+          .then((url) => {
+            addDoc(postsCollectionRef, {
+              title,
+              postIntro,
+              postText,
+              url,
+              author: {
+                name: auth.currentUser.displayName,
+                id: auth.currentUser.uid,
+              },
+            })
+            console.log(url)
+          })
+          .catch((error) => {
+            console.log(error.message, 'error getting image url')
+          })
+        //setImage(null)
+      })
+      .catch((error) => {
+        console.log(error.message)
+      })
+
+    console.log('url:', urlLink)
+
     navigate('/')
+  }
+
+  const handleImageChange = (e) => {
+    if (e.target.files[0]) {
+      setImage(e.target.files[0])
+    }
   }
 
   return (
@@ -49,6 +89,15 @@ const CreateBlog = () => {
           <h1 className='text-center text-[35px]'>Create a post</h1>
 
           <div className='flex flex-col mt-4 gap-4 text-[25px] mx-[30%]'>
+            <div>
+              <label>Image : </label>
+              <input type='file' onChange={handleImageChange} />
+            </div>
+
+            <div>
+              <img src={urlLink} />
+            </div>
+
             <div className='flex justify-between'>
               <label>Title : </label>
               <textarea

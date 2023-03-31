@@ -41,7 +41,7 @@ const NavbarSubSite = () => {
                 className='text-green text-[25px] ml-6 cursor-pointer'
                 onClick={() => navigate('/')}
               >
-                Refresh Your Spirit of Faith.
+                Home.
               </h1>
               <div className='md:hidden'>
                 <button
@@ -88,29 +88,20 @@ const NavbarSubSite = () => {
               }`}
             >
               <ul className='justify-center space-y-8 md:flex md:space-x-6 md:space-y-0'>
-                <li>
-                  <a href='/blog' className='text-[2rem] hover:text-green'>
-                    Blog
-                  </a>
-                </li>
-                <li>
-                  <a href='/surveys' className='text-[2rem] hover:text-green'>
-                    Surveys
-                  </a>
-                </li>
+                {location.pathname !== '/blog' ? (
+                  <li>
+                    <a href='/blog' className='text-[2rem] hover:text-green'>
+                      Blog
+                    </a>
+                  </li>
+                ) : (
+                  <li>
+                    <a href='/surveys' className='text-[2rem] hover:text-green'>
+                      Surveys
+                    </a>
+                  </li>
+                )}
 
-                <li>
-                  <Link
-                    to='contact'
-                    spy={true}
-                    smooth={true}
-                    offset={0}
-                    duration={500}
-                    className='text-[2rem] hover:text-green'
-                  >
-                    Contact
-                  </Link>
-                </li>
                 {!isAuth && (
                   <li className='text-[2rem] hover:text-green'>
                     <a href={'/login'}>Login</a>

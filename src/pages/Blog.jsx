@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore'
 import { db } from './../firebaseConfig'
-import { SinglePost, Navbar } from '../components'
+import { SinglePost, NavbarSubSite } from '../components'
 
 const Blog = () => {
   const [postList, setPostList] = useState([])
@@ -41,7 +41,7 @@ const Blog = () => {
 
   return (
     <>
-      <Navbar />
+      <NavbarSubSite />
       {postList.map((post) => {
         return <SinglePost key={post.id} post={post} isAuth={isAuth} />
       })}

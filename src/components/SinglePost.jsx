@@ -8,12 +8,16 @@ const SinglePost = ({ post, isAuth }) => {
     await deleteDoc(postDoc)
     window.location.reload()
   }, [])
+
+  console.log('post:', post)
+
   return (
     <div
       className='bg-singlePostBlack text-white m-2 lg:m-10 rounded-xl'
       key={post.id}
     >
       <div className='p-8'>
+        <img src={post.url} className='w-[5%]' />
         <h1 className='text-[45px] text-center'>{post.title}</h1>
         <p className='text-[25px] lg:text-justify mt-8'>{post.postText}</p>
       </div>
