@@ -25,16 +25,21 @@ const Login = () => {
 
   return (
     <>
-      <div className='text-white'>
+      <div className='text-white h-[90vh]'>
         <div className='flex flex-col gap-4 m-4 items-start'>
           <h1
-            className='text-green text-[25px] ml-6 cursor-pointer'
+            className='text-green text-[25px] cursor-pointer'
             onClick={() => navigate('/')}
           >
-            Refresh Your Spirit of Faith.
+            Home.
           </h1>
 
-          <button onClick={signInWithGoogle}>Log in with Google</button>
+          <button
+            onClick={signInWithGoogle}
+            className='bg-green p-2 rounded-xl text-[25px]'
+          >
+            Log in with Google
+          </button>
         </div>
       </div>
     </>

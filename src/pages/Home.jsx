@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Navbar, Footer, SinglePostIntro } from '../components'
+import { Navbar, SinglePostIntro } from '../components'
 import { Posts, Contact } from './../sections'
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
@@ -56,17 +56,17 @@ const Home = () => {
     const postDoc = doc(db, 'posts', id)
     await deleteDoc(postDoc)
   }, [])
-  // useEffect(() => {
-  //   const getPosts = async () => {
-  //     try {
-  //       const data = await getDocs(postsCollectionRef)
-  //       setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  //   }
-  //   getPosts()
-  // }, [deletePost])
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const data = await getDocs(postsCollectionRef)
+        setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getPosts()
+  }, [deletePost])
 
   console.log(postList)
 
@@ -74,15 +74,19 @@ const Home = () => {
     <>
       <Navbar />
 
-      <div className='flex flex-col items-center justify-center h-[80vh]'>
+      <div className='flex flex-col items-center justify-center h-[70vh]'>
         <h1 className='text-grey text-[45px]'>Welcome to</h1>
         <h1 className='text-grey text-[45px]'>the</h1>
         <h1 className='text-[45px] lg:text-[55px] text-white'>Bible Blog</h1>
       </div>
-      <div className='flex flex-col gap-2 p-4 text-white'></div>
+
       <Posts />
-      <h1 className='text-center text-white'>POSTS</h1>
-      <div className='flex justify-center'>
+
+      <h1 className='text-center text-white text-[50px] my-[125px]'>
+        Newest Posts
+      </h1>
+
+      <div className='flex flex-col lg:flex-row justify-center gap-5 m-4 lg:m-20'>
         {postList.map((post) => {
           return (
             <SinglePostIntro
@@ -95,8 +99,6 @@ const Home = () => {
       </div>
 
       <Contact />
-
-      <Footer />
     </>
   )
 }

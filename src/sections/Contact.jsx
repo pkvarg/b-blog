@@ -71,11 +71,11 @@ const Contact = () => {
     <div className='pt-40 pb-10 '>
       <h1
         id='contact'
-        className='text-[35px] lg:text-[60px] text-green text-center lg:pt-0 pt-[55px]'
+        className='text-[35px] lg:text-[50px] text-green text-center lg:pt-0 pt-[55px]'
       >
         Send us a message
       </h1>
-      <div className='mx-4 md:mx-6 lg:mx-0 flex lg:flex-row flex-col lg:justify-center text-white lg:py-[100px] '>
+      <div className='mx-4 md:mx-6 lg:mx-0 flex lg:flex-row flex-col lg:justify-center text-white lg:py-[5px] '>
         <div className='pt-[50px] lg:pt-0 lg:pt-[0px] '>
           {messageSuccess && (
             <Message variant='success'>{messageSuccess}</Message>
@@ -85,7 +85,7 @@ const Contact = () => {
             <form
               ref={form}
               onSubmit={sendEmail}
-              className='flex flex-col gap-[2.5px] text-[35px] text-grey'
+              className='flex flex-col gap-[2.5px] text-[25px] text-grey'
             >
               <div className='flex lg:flex-row flex-col gap-[25px]'>
                 <div className='flex flex-col justify-center '>
@@ -154,11 +154,11 @@ const Contact = () => {
                     value={checkBox}
                     onChange={handleCheckBox}
                     required='required'
-                    className='rounded-xl'
+                    className='rounded-xl w-[25px]'
                   />
 
                   <label
-                    className='form-check-label lg:text-[30px] text-[35px] ml-[15px]'
+                    className='form-check-label text-[25px] lg:text-[30px] ml-[15px]'
                     htmlFor='flexCheckDefault'
                   >
                     I Agree with data collection
@@ -178,7 +178,7 @@ const Contact = () => {
                 onChange={(e) => setPasswordGroupTwo(e.target.value)}
               />
               <button
-                className='text-[35px] bg-violet lg:mt-20 mt-10 pt-1 rounded-xl border border-white hover:text-white hover:bg-green'
+                className='text-[35px] bg-violet lg:mt-10 mt-10 pt-1 rounded-xl border border-white hover:text-white hover:bg-green'
                 type='submit'
                 value='Send'
               >

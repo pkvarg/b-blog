@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <>
       <div className='flex flex-col items-center justify-center'>
-        <p className='text-grey text-[20px]'>
+        <p className='text-grey text-[20px] text-center'>
           Copyright &copy; {Date().substring(11, 15)} All rights reserved
         </p>
         <a

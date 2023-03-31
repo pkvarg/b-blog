@@ -45,14 +45,14 @@ const CreateBlog = () => {
         >
           Refresh Your Spirit of Faith.
         </h1>
-        <div className='text-white mt-[12%]'>
+        <div className='text-white mt-[2%]'>
           <h1 className='text-center text-[35px]'>Create a post</h1>
 
-          <div className='flex flex-col items-center mt-4 gap-4'>
+          <div className='flex flex-col mt-4 gap-4 text-[25px] mx-[30%]'>
             <div className='flex justify-between'>
               <label>Title : </label>
               <textarea
-                className='text-black'
+                className='text-black w-[85%]'
                 placeholder='Title...'
                 onChange={(e) => {
                   setTitle(e.target.value)
@@ -63,7 +63,7 @@ const CreateBlog = () => {
             <div className='flex justify-between'>
               <label>Intro : </label>
               <textarea
-                className='text-black'
+                className='text-black h-[150px] w-[85%]'
                 placeholder='Intro...'
                 onChange={(e) => {
                   setPostIntro(e.target.value)
@@ -71,17 +71,20 @@ const CreateBlog = () => {
               />
             </div>
 
-            <div className='flex justify-between'>
+            <div className='flex justify-between h-[250px]'>
               <label className=''>Post : </label>
               <textarea
-                className='text-black'
+                className='text-black w-[85%]'
                 placeholder='Post...'
                 onChange={(e) => {
                   setPostText(e.target.value)
                 }}
               />
             </div>
-            <button className='bg-green p-4 mt-2 w-[10%]' onClick={createPost}>
+            <button
+              className='bg-green p-4 mt-2 w-[85%] ml-auto'
+              onClick={createPost}
+            >
               {' '}
               Submit Post
             </button>
