@@ -1,22 +1,16 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import {
-  getFirestore,
-  getDocs,
-  collection,
-  deleteDoc,
-  doc,
-} from 'firebase/firestore'
-import { db } from './Home'
+import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore'
+import { db } from './../firebaseConfig'
 import { SinglePost, Navbar } from '../components'
 
 const Blog = () => {
   const [postList, setPostList] = useState([])
   const postsCollectionRef = collection(db, 'posts')
 
-  const deletePost = useCallback(async (id) => {
-    const postDoc = doc(db, 'posts', id)
-    await deleteDoc(postDoc)
-  }, [])
+  // const deletePost = useCallback(async (id) => {
+  //   const postDoc = doc(db, 'posts', id)
+  //   await deleteDoc(postDoc)
+  // }, [])
 
   useEffect(() => {
     const getPosts = async () => {
@@ -28,7 +22,7 @@ const Blog = () => {
       }
     }
     getPosts()
-  }, [deletePost])
+  }, [])
 
   const [isAuth, setIsAuth] = useState()
 
@@ -49,11 +43,7 @@ const Blog = () => {
     <>
       <Navbar />
       {postList.map((post) => {
-        return (
-          <>
-            <SinglePost key={post.id} post={post} isAuth={isAuth} />
-          </>
-        )
+        return <SinglePost key={post.id} post={post} isAuth={isAuth} />
       })}
     </>
   )

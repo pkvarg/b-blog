@@ -1,6 +1,13 @@
-import React from 'react'
+import React, { useCallback } from 'react'
+import { deleteDoc, doc } from 'firebase/firestore'
+import { db } from './../firebaseConfig'
 
 const SinglePost = ({ post, isAuth }) => {
+  const deletePost = useCallback(async (id) => {
+    const postDoc = doc(db, 'posts', id)
+    await deleteDoc(postDoc)
+    window.location.reload()
+  }, [])
   return (
     <div
       className='bg-singlePostBlack text-white m-2 lg:m-10 rounded-xl'

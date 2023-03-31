@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { addDoc, collection } from 'firebase/firestore'
-import { db, auth } from './Home'
+import { db, auth } from './../firebaseConfig'
 
 const CreateBlog = () => {
   const navigate = useNavigate()

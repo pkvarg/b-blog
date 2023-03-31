@@ -1,36 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Navbar, SinglePostIntro } from '../components'
 import { Posts, Contact } from './../sections'
-import { initializeApp } from 'firebase/app'
-import { getAnalytics } from 'firebase/analytics'
-import { getAuth, GoogleAuthProvider } from 'firebase/auth'
-import {
-  getFirestore,
-  getDocs,
-  collection,
-  deleteDoc,
-  doc,
-} from 'firebase/firestore'
-import { signOut } from 'firebase/auth'
-
 import { useNavigate } from 'react-router-dom'
+import { db } from '../firebaseConfig'
 
-const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
-}
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig)
-const analytics = getAnalytics(app)
-export const auth = getAuth(app)
-export const provider = new GoogleAuthProvider()
-export const db = getFirestore(app)
+import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -88,13 +62,7 @@ const Home = () => {
 
       <div className='flex flex-col lg:flex-row justify-center gap-5 m-4 lg:m-20'>
         {postList.map((post) => {
-          return (
-            <SinglePostIntro
-              key={post.id}
-              post={post}
-              onClick={() => navigate('/blog')}
-            />
-          )
+          return <SinglePostIntro key={post.id} post={post} />
         })}
       </div>
 

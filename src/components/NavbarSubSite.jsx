@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-scroll'
 import { signOut } from 'firebase/auth'
 import { auth } from './../firebaseConfig'
 
-const Navbar = () => {
+const NavbarSubSite = () => {
   const [navbar, setNavbar] = useState(false)
-  const [isAuth, setIsAuth] = useState()
   const navigate = useNavigate()
-  const location = useLocation()
+
+  const [isAuth, setIsAuth] = useState()
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('isAuth')
@@ -30,8 +30,6 @@ const Navbar = () => {
       //navigate('/')
     })
   }
-
-  console.log(location)
 
   return (
     <>
@@ -152,4 +150,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default NavbarSubSite
