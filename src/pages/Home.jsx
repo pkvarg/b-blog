@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
-
 import { Navbar, Footer, SinglePostIntro } from '../components'
-import { Posts } from './../sections'
+import { Posts, Contact } from './../sections'
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'
@@ -57,23 +56,23 @@ const Home = () => {
     const postDoc = doc(db, 'posts', id)
     await deleteDoc(postDoc)
   }, [])
-  useEffect(() => {
-    const getPosts = async () => {
-      try {
-        const data = await getDocs(postsCollectionRef)
-        setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getPosts()
-  }, [deletePost])
+  // useEffect(() => {
+  //   const getPosts = async () => {
+  //     try {
+  //       const data = await getDocs(postsCollectionRef)
+  //       setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   getPosts()
+  // }, [deletePost])
 
   console.log(postList)
 
   return (
     <>
-      <Navbar isAuth={isAuth} setIsAuth={setIsAuth} />
+      <Navbar />
 
       <div className='flex flex-col items-center justify-center h-[80vh]'>
         <h1 className='text-grey text-[45px]'>Welcome to</h1>
@@ -83,11 +82,19 @@ const Home = () => {
       <div className='flex flex-col gap-2 p-4 text-white'></div>
       <Posts />
       <h1 className='text-center text-white'>POSTS</h1>
-      <div>
+      <div className='flex justify-center'>
         {postList.map((post) => {
-          return <SinglePostIntro key={post.id} post={post} />
+          return (
+            <SinglePostIntro
+              key={post.id}
+              post={post}
+              onClick={() => navigate('/blog')}
+            />
+          )
         })}
       </div>
+
+      <Contact />
 
       <Footer />
     </>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Home, Login, CreateBlog, Blog } from './pages'
+import { Home, Login, CreateBlog, Blog, Surveys } from './pages'
 // Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
@@ -13,6 +13,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/blog' element={<Blog />} />
         <Route path='/create-blog' element={<CreateBlog />} />
+        <Route path='/surveys' element={<Surveys />} />
       </Routes>
     </BrowserRouter>
   )

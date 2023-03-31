@@ -1,12 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-scroll'
 import { signOut } from 'firebase/auth'
 import { auth } from './../pages/Home'
 
-const Navbar = ({ isAuth, setIsAuth }) => {
+const Navbar = () => {
   const [navbar, setNavbar] = useState(false)
   const navigate = useNavigate()
+
+  const [isAuth, setIsAuth] = useState()
+
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isAuth')
+    if (loggedIn) {
+      setIsAuth(loggedIn)
+    } else if (!loggedIn) {
+      setIsAuth(false)
+    } else {
+      setIsAuth(false)
+    }
+  }, [isAuth])
+
+  console.log('navbar is auth:', isAuth)
 
   const signUserOut = () => {
     signOut(auth).then(() => {
@@ -79,7 +94,7 @@ const Navbar = ({ isAuth, setIsAuth }) => {
                   </a>
                 </li>
                 <li>
-                  <a href='/projects' className='text-[2rem] hover:text-green'>
+                  <a href='/surveys' className='text-[2rem] hover:text-green'>
                     Surveys
                   </a>
                 </li>
@@ -96,18 +111,32 @@ const Navbar = ({ isAuth, setIsAuth }) => {
                     Contact
                   </Link>
                 </li>
-                <li className='text-[2rem] hover:text-green'>
+                {!isAuth && (
+                  <li className='text-[2rem] hover:text-green'>
+                    <a href={'/login'}>Login</a>
+                  </li>
+                )}
+                {isAuth && (
+                  <>
+                    <li className='text-[2rem] hover:text-green'>
+                      <button onClick={signUserOut}>Log out</button>
+                    </li>
+                    <li className='text-[2rem] hover:text-green'>
+                      <a href={'/create-blog'} className='ml-2'>
+                        Create Blog
+                      </a>
+                    </li>
+                  </>
+                )}
+
+                {/* <li className='text-[2rem] hover:text-green'>
                   {!isAuth ? (
                     <a href={'/login'}>Login</a>
                   ) : (
                     <>
-                      <button onClick={signUserOut}>Log out</button>
-                      <a href={'/create-blog'} className='ml-2'>
-                        Create Blog
-                      </a>
                     </>
                   )}
-                </li>
+                </li> */}
 
                 {/* <li>
               <LanguageBar />

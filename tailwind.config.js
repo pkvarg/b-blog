@@ -8,6 +8,8 @@ module.exports = {
       green: '#31973E',
       black: '#101010',
       singlePostBlack: '#171717',
+      'message-red': '	#EE4B2B',
+      'message-green': '#039f2f',
     },
   },
   plugins: [],

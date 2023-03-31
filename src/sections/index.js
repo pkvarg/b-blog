@@ -1,3 +1,4 @@
 import Pictures from './Pictures'
 import Posts from './Posts'
-export { Pictures, Posts }
+import Contact from './Contact'
+export { Pictures, Posts, Contact }
