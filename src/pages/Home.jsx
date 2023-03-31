@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Link } from 'react-router-dom'
-import { Navbar, Footer } from '../components'
+
+import { Navbar, Footer, SinglePostIntro } from '../components'
 import { Posts } from './../sections'
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
 import { getAuth, GoogleAuthProvider } from 'firebase/auth'
@@ -34,33 +33,25 @@ export const auth = getAuth(app)
 export const provider = new GoogleAuthProvider()
 export const db = getFirestore(app)
 
-const Home = ({ isAuth, setIsAuth }) => {
+const Home = () => {
   const navigate = useNavigate()
+  const [isAuth, setIsAuth] = useState()
 
-  // const signUserOut = () => {
-  //   signOut(auth).then(() => {
-  //     localStorage.clear()
-  //     setIsAuth(false)
-  //     //navigate('/')
-  //   })
-  // }
+  useEffect(() => {
+    const loggedIn = localStorage.getItem('isAuth')
+    if (loggedIn) {
+      setIsAuth(loggedIn)
+    } else if (!loggedIn) {
+      setIsAuth(false)
+    } else {
+      setIsAuth(false)
+    }
+  }, [])
+
+  console.log('home is auth:', isAuth)
 
   const [postList, setPostList] = useState([])
   const postsCollectionRef = collection(db, 'posts')
-
-  // const deletePost = async (id) => {
-  //   const postDoc = doc(db, 'posts', id)
-  //   await deleteDoc(postDoc)
-  //   window.location.reload()
-  // }
-
-  // useEffect(() => {
-  //   const getPosts = async () => {
-  //     const data = await getDocs(postsCollectionRef)
-  //     console.log(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-  //   }
-  //   getPosts()
-  // }, [])
 
   const deletePost = useCallback(async (id) => {
     const postDoc = doc(db, 'posts', id)
@@ -89,36 +80,15 @@ const Home = ({ isAuth, setIsAuth }) => {
         <h1 className='text-grey text-[45px]'>the</h1>
         <h1 className='text-[45px] lg:text-[55px] text-white'>Bible Blog</h1>
       </div>
-      <div className='flex flex-col gap-2 p-4 text-white'>
-        {/* {!isAuth ? (
-          <Link to={'/login'}>Login</Link>
-        ) : (
-          <>
-            <button onClick={signUserOut}>Log out</button>
-            <Link to={'/create-blog'}>Create new Blog</Link>
-          </>
-        )} */}
-      </div>
-      {/* <h1 className='text-center text-white'>POSTS</h1> */}
-      {/* <div>
-        {postList.map((post) => {
-          return (
-            <div className='text-white'>
-              <div>
-                <h1>{post.title}</h1>
-              </div>
-              <div>
-                <button onClick={() => deletePost(post.id)}>&#128465;</button>
-              </div>
-              <div>{post.postText}</div>
-              <div>
-                <h2>{post.author.name}</h2>
-              </div>
-            </div>
-          )
-        })}
-      </div> */}
+      <div className='flex flex-col gap-2 p-4 text-white'></div>
       <Posts />
+      <h1 className='text-center text-white'>POSTS</h1>
+      <div>
+        {postList.map((post) => {
+          return <SinglePostIntro key={post.id} post={post} />
+        })}
+      </div>
+
       <Footer />
     </>
   )

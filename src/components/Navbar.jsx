@@ -74,16 +74,9 @@ const Navbar = ({ isAuth, setIsAuth }) => {
             >
               <ul className='justify-center space-y-8 md:flex md:space-x-6 md:space-y-0'>
                 <li>
-                  <Link
-                    to='offer'
-                    spy={true}
-                    smooth={true}
-                    offset={0}
-                    duration={500}
-                    className='text-[2rem] hover:text-green'
-                  >
-                    Offer
-                  </Link>
+                  <a href='/blog' className='text-[2rem] hover:text-green'>
+                    Blog
+                  </a>
                 </li>
                 <li>
                   <a href='/projects' className='text-[2rem] hover:text-green'>

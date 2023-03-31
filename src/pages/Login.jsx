@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { auth, provider } from './Home'
 import { signInWithPopup } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
 
-const Login = ({ setIsAuth }) => {
+const Login = () => {
   const navigate = useNavigate()
+  const [isAuth, setIsAuth] = useState()
+
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider).then((result) => {
       console.log(result.user.email)
@@ -18,6 +20,8 @@ const Login = ({ setIsAuth }) => {
       }
     })
   }
+
+  console.log('login auth:', isAuth)
 
   return (
     <>

@@ -7,6 +7,7 @@ module.exports = {
       white: '#fdfdfd',
       green: '#31973E',
       black: '#101010',
+      singlePostBlack: '#171717',
     },
   },
   plugins: [],
