@@ -25,8 +25,6 @@ const CreateBlog = () => {
     }
   }, [])
 
-  console.log('create is auth:', isAuth)
-
   const postsCollectionRef = collection(db, 'posts')
 
   const createPost = () => {
@@ -39,7 +37,7 @@ const CreateBlog = () => {
     // })
 
     // image to firebase storage
-    const imageRef = ref(storage, 'image')
+    const imageRef = ref(storage, image.name)
     uploadBytes(imageRef, image)
       .then(() => {
         getDownloadURL(imageRef)
@@ -54,7 +52,6 @@ const CreateBlog = () => {
                 id: auth.currentUser.uid,
               },
             })
-            console.log(url)
           })
           .catch((error) => {
             console.log(error.message, 'error getting image url')
@@ -64,8 +61,6 @@ const CreateBlog = () => {
       .catch((error) => {
         console.log(error.message)
       })
-
-    console.log('url:', urlLink)
 
     navigate('/')
   }

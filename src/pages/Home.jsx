@@ -21,8 +21,6 @@ const Home = () => {
     }
   }, [])
 
-  console.log('home is auth:', isAuth)
-
   const [postList, setPostList] = useState([])
   const postsCollectionRef = collection(db, 'posts')
 
@@ -41,8 +39,6 @@ const Home = () => {
     }
     getPosts()
   }, [deletePost])
-
-  console.log(postList)
 
   return (
     <>

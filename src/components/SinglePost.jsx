@@ -9,8 +9,6 @@ const SinglePost = ({ post, isAuth }) => {
     window.location.reload()
   }, [])
 
-  console.log('post:', post)
-
   return (
     <div
       className='bg-singlePostBlack text-white m-2 lg:m-10 rounded-xl'

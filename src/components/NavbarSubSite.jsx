@@ -21,8 +21,6 @@ const NavbarSubSite = () => {
     }
   }, [isAuth])
 
-  console.log('navbar is auth:', isAuth)
-
   const signUserOut = () => {
     signOut(auth).then(() => {
       localStorage.clear()

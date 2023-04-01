@@ -9,19 +9,16 @@ const Login = () => {
 
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider).then((result) => {
-      console.log(result.user.email)
       if (result.user.email === import.meta.env.VITE_AUTH_EMAIL_2) {
         localStorage.setItem('isAuth', true)
         setIsAuth(true)
-        navigate('/create-blog')
+        navigate('/')
       } else {
         navigate('/')
         alert('Unauthorised user')
       }
     })
   }
-
-  console.log('login auth:', isAuth)
 
   return (
     <>

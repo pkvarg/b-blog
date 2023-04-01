@@ -7,6 +7,7 @@ import { auth } from './../firebaseConfig'
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false)
   const [isAuth, setIsAuth] = useState()
+  const [isOpen, setIsOpen] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -21,8 +22,6 @@ const Navbar = () => {
     }
   }, [isAuth])
 
-  console.log('navbar is auth:', isAuth)
-
   const signUserOut = () => {
     signOut(auth).then(() => {
       localStorage.clear()
@@ -31,7 +30,15 @@ const Navbar = () => {
     })
   }
 
-  console.log(location)
+  function toggleDropdown() {
+    setIsOpen(!isOpen)
+  }
+
+  const menuItems = [
+    { name: 'Home', href: '/' },
+    { name: 'About', href: '/about' },
+    { name: 'Contact', href: '/contact' },
+  ]
 
   return (
     <>
@@ -113,36 +120,57 @@ const Navbar = () => {
                     Contact
                   </Link>
                 </li>
+                {isAuth && (
+                  <li className='relative inline-block text-left bg-transparent text-white '>
+                    <button
+                      className='inline-flex text-[2rem] justify-center items-center w-full hover:text-green outline-none'
+                      onClick={toggleDropdown}
+                    >
+                      Admin
+                      <svg
+                        className='-mr-1 ml-2 h-5 w-5'
+                        xmlns='http://www.w3.org/2000/svg'
+                        viewBox='0 0 20 20'
+                        fill='currentColor'
+                        aria-hidden='true'
+                      >
+                        <path
+                          fillRule='evenodd'
+                          d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
+                          clipRule='evenodd'
+                        />
+                      </svg>
+                    </button>
+                    {isOpen && (
+                      <div className='absolute right-0 mt-2 w-56 rounded-md'>
+                        <div
+                          className='py-1 text-[1.5rem] flex flex-col items-end'
+                          role='menu'
+                          aria-orientation='vertical'
+                          aria-labelledby='options-menu'
+                        >
+                          <button
+                            className='hover:text-green'
+                            onClick={() => signUserOut()}
+                          >
+                            Log out
+                          </button>
+                          <a
+                            href={'/create-blog'}
+                            className='ml-2 hover:text-green'
+                          >
+                            Create Blog
+                          </a>
+                        </div>
+                      </div>
+                    )}
+                  </li>
+                )}
                 {!isAuth && (
                   <li className='text-[2rem] hover:text-green'>
                     <a href={'/login'}>Login</a>
                   </li>
                 )}
-                {isAuth && (
-                  <>
-                    <li className='text-[2rem] hover:text-green'>
-                      <button onClick={signUserOut}>Log out</button>
-                    </li>
-                    <li className='text-[2rem] hover:text-green'>
-                      <a href={'/create-blog'} className='ml-2'>
-                        Create Blog
-                      </a>
-                    </li>
-                  </>
-                )}
-
-                {/* <li className='text-[2rem] hover:text-green'>
-                  {!isAuth ? (
-                    <a href={'/login'}>Login</a>
-                  ) : (
-                    <>
-                    </>
-                  )}
-                </li> */}
-
-                {/* <li>
-              <LanguageBar />
-            </li> */}
               </ul>
             </div>
           </div>

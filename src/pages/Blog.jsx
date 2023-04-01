@@ -37,8 +37,6 @@ const Blog = () => {
     }
   }, [])
 
-  console.log('blog is auth:', isAuth)
-
   return (
     <>
       <NavbarSubSite />
