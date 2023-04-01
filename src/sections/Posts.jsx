@@ -10,9 +10,9 @@ const Posts = () => {
             "For the word of God is alive and active...
           </p>
           <p className='text-[30px]'>
-            it penetrates even to dividing soul and spirit..."
+            it penetrates even to dividing soul and spirit...{' '}
+            <span className='text-[17.5px]'>Heb 4:12</span>
           </p>
-          <span>Heb 4:12</span>
         </div>
       </div>
     </>
