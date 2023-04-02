@@ -1,29 +1,12 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore'
+import React, { useState, useEffect } from 'react'
+import { collection } from 'firebase/firestore'
 import { db } from './../firebaseConfig'
 import { SinglePost, NavbarSubSite } from '../components'
 
 const Blog = () => {
   const [postList, setPostList] = useState([])
+  const [storedPosts, setStoredPosts] = useState([])
   const postsCollectionRef = collection(db, 'posts')
-
-  // const deletePost = useCallback(async (id) => {
-  //   const postDoc = doc(db, 'posts', id)
-  //   await deleteDoc(postDoc)
-  // }, [])
-
-  useEffect(() => {
-    const getPosts = async () => {
-      try {
-        const data = await getDocs(postsCollectionRef)
-        setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getPosts()
-  }, [])
-
   const [isAuth, setIsAuth] = useState()
 
   useEffect(() => {
@@ -35,12 +18,16 @@ const Blog = () => {
     } else {
       setIsAuth(false)
     }
+    const storagePosts = localStorage.getItem('postList')
+      ? JSON.parse(localStorage.getItem('postList'))
+      : []
+    setStoredPosts(storagePosts)
   }, [])
 
   return (
     <>
       <NavbarSubSite />
-      {postList.map((post) => {
+      {storedPosts.map((post) => {
         return <SinglePost key={post.id} post={post} isAuth={isAuth} />
       })}
     </>

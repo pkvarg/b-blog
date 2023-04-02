@@ -28,14 +28,6 @@ const CreateBlog = () => {
   const postsCollectionRef = collection(db, 'posts')
 
   const createPost = () => {
-    // await addDoc(postsCollectionRef, {
-    //   title,
-    //   postIntro,
-    //   postText,
-
-    //   author: { name: auth.currentUser.displayName, id: auth.currentUser.uid },
-    // })
-
     // image to firebase storage
     const imageRef = ref(storage, image.name)
     uploadBytes(imageRef, image)
@@ -47,6 +39,7 @@ const CreateBlog = () => {
               postIntro,
               postText,
               url,
+              imageName: image.name,
               author: {
                 name: auth.currentUser.displayName,
                 id: auth.currentUser.uid,
@@ -62,6 +55,7 @@ const CreateBlog = () => {
         console.log(error.message)
       })
 
+    localStorage.removeItem('postList')
     navigate('/')
   }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { getDocs, collection, doc, updateDoc } from 'firebase/firestore'
 import { db, auth } from './../firebaseConfig'
@@ -16,6 +16,11 @@ const EditBlog = () => {
   const [postIntro, setPostIntro] = useState('')
   const [postText, setPostText] = useState('')
   const [image, setImage] = useState(null)
+  const [imageFileUrl, setImageFileUrl] = useState('')
+  const [imageName, setImageName] = useState('')
+  const [editedPost, setEditedPost] = useState([])
+  const imageUrl = image ? URL.createObjectURL(image) : null
+
   const postsCollectionRef = collection(db, 'posts')
 
   const navigate = useNavigate()
@@ -32,65 +37,71 @@ const EditBlog = () => {
   }, [])
 
   useEffect(() => {
-    const getPosts = async () => {
-      try {
-        const data = await getDocs(postsCollectionRef)
-        setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-        localStorage.setItem('postList', JSON.stringify(postList))
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getPosts()
-  }, [])
-
-  useEffect(() => {
-    const storedPosts = localStorage.getItem('postList')
+    const storagePosts = localStorage.getItem('postList')
       ? JSON.parse(localStorage.getItem('postList'))
       : []
-    const filterStoredPosts = storedPosts.filter(
-      (post) => post.id === params.id
-    )
-    console.log('init', filterStoredPosts)
-    setTitle(filterStoredPosts[0].title)
-    setPostIntro(filterStoredPosts[0].postIntro)
-    setPostText(filterStoredPosts[0].postText)
+    const currentPost = storagePosts.filter((post) => post.id === params.id)
+    setEditedPost(currentPost)
+    setTitle(currentPost[0].title)
+    setPostIntro(currentPost[0].postIntro)
+    setPostText(currentPost[0].postText)
+    setImageFileUrl(currentPost[0].url)
+    setImageName(currentPost[0].imageName)
   }, [])
 
   const handleImageChange = (e) => {
-    if (e.target.files[0]) {
-      setImage(e.target.files[0])
+    const imageFile = e.target.files[0]
+    if (imageFile) {
+      setImage(imageFile)
+      setImageName(imageFile.name)
     }
   }
 
   const editPost = (postId) => {
     const docRef = doc(db, 'posts', postId)
-    const imageRef = ref(storage, image.name)
-    uploadBytes(imageRef, image)
-      .then(() => {
-        getDownloadURL(imageRef)
-          .then((url) => {
-            updateDoc(docRef, {
-              title,
-              postIntro,
-              postText,
-              url,
-              author: {
-                name: auth.currentUser.displayName,
-                id: auth.currentUser.uid,
-              },
+    const imageRef = ref(storage, imageName)
+    if (image) {
+      uploadBytes(imageRef, image)
+        .then(() => {
+          getDownloadURL(imageRef)
+            .then((url) => {
+              updateDoc(docRef, {
+                title,
+                postIntro,
+                postText,
+                url,
+                imageName,
+                author: {
+                  name: auth.currentUser.displayName,
+                  id: auth.currentUser.uid,
+                },
+              })
             })
-          })
-          .catch((error) => {
-            console.log(error.message, 'error getting image url')
-          })
-        //setImage(null)
-      })
-      .catch((error) => {
-        console.log(error.message)
-      })
+            .catch((error) => {
+              console.log(error.message, 'error getting image url')
+            })
+          //setImage(null)
+        })
+        .catch((error) => {
+          console.log(error.message)
+        })
+    } else {
+      try {
+        updateDoc(docRef, {
+          title,
+          postIntro,
+          postText,
+          author: {
+            name: auth.currentUser.displayName,
+            id: auth.currentUser.uid,
+          },
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    }
 
-    navigate('/')
+    localStorage.removeItem('postList')
   }
 
   return (
@@ -104,12 +115,18 @@ const EditBlog = () => {
         </h1>
 
         <div className='flex flex-col mt-4 gap-4 text-[25px] mx-[30%]'>
-          {postList.map(
+          {editedPost.map(
             (post) =>
               post.id === params.id && (
                 <div key={post.id} className='flex flex-col gap-2'>
-                  <img src={post.url} className='w-[150px]' />
-                  <label>Image : </label>
+                  {/* <img src={imageFileUrl} className='w-[150px]' /> */}
+                  <img
+                    src={image ? imageUrl : imageFileUrl}
+                    alt='the image file'
+                    className='w-[150px]'
+                  />
+
+                  {/* <label>Image : </label> */}
                   <input type='file' onChange={handleImageChange} />
 
                   <div className='flex justify-between'>

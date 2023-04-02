@@ -8,7 +8,9 @@ const SinglePost = ({ post, isAuth }) => {
   const deletePost = useCallback(async (id) => {
     const postDoc = doc(db, 'posts', id)
     await deleteDoc(postDoc)
-    window.location.reload()
+    localStorage.removeItem('postList')
+    alert('Post deleted')
+    navigate('/')
   }, [])
 
   const editPost = (postId) => {

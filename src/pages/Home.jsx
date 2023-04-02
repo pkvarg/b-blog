@@ -33,6 +33,12 @@ const Home = () => {
       try {
         const data = await getDocs(postsCollectionRef)
         setPostList(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+        localStorage.setItem(
+          'postList',
+          JSON.stringify(
+            data.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+          )
+        )
       } catch (error) {
         console.log(error)
       }
