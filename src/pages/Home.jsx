@@ -62,10 +62,14 @@ const Home = () => {
         Newest Posts
       </h1>
 
-      <div className='flex flex-col justify-center gap-5 m-4 lg:m-20'>
-        {postList.map((post) => {
-          return <SinglePostIntro key={post.id} post={post} />
-        })}
+      <div className='text-white flex flex-row items-center justify-center lg:m-20'>
+        <div>Bible Facts</div>
+
+        <div className='flex flex-col justify-center gap-5 m-4 lg:m-20'>
+          {postList.map((post) => {
+            return <SinglePostIntro key={post.id} post={post} />
+          })}
+        </div>
       </div>
 
       <Contact />
