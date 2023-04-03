@@ -65,9 +65,9 @@ const Home = () => {
         Newest Posts
       </h1> */}
 
-      <div className='text-white flex flex-row  justify-center lg:m-20'>
-        <div className='mt-20'>
-          <h1 className='text-[40px] text-grey my-2'>Some Bible Facts</h1>
+      <div className='text-white flex flex-row justify-center mx-20 gap-10 mt-20'>
+        <div className=''>
+          <h1 className='text-[37.5px] text-grey mt-15'>Some Bible Facts</h1>
           {facts.map((fact) => {
             return (
               <div key={fact.title}>
@@ -84,7 +84,7 @@ const Home = () => {
           })}
         </div>
 
-        <div className='flex flex-col justify-center gap-5 m-4 lg:m-20'>
+        <div className='flex flex-col justify-center gap-5'>
           {postList.map((post) => {
             return <SinglePostIntro key={post.id} post={post} />
           })}

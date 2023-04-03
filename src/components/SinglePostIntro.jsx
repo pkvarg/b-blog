@@ -6,7 +6,7 @@ const SinglePostIntro = ({ post }) => {
   const params = useParams()
 
   return (
-    <div className='bg-singlePostBlack text-white rounded-xl w-[100%]'>
+    <div className='bg-singlePostBlack text-white rounded-xl'>
       <div className='p-8'>
         <h1 className='text-[45px] text-center'>{post.title}</h1>
         <p className='text-[25px] text-justify mt-2'>{post.postIntro}</p>

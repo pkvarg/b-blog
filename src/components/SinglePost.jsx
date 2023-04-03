@@ -23,8 +23,13 @@ const SinglePost = ({ post, isAuth }) => {
       key={post.id}
     >
       <div className='p-8'>
-        <img src={post.url} className='w-[75px] h-[75px]' />
-        <h1 className='text-[45px] text-center'>{post.title}</h1>
+        <div className='flex items-center justify-center gap-8'>
+          <img src={post.url} className='w-[75px] h-[75px]' />
+          <h1 className='text-[45px] text-center'>{post.title}</h1>
+        </div>
+
+        <p className='text-[25px] lg:text-justify mt-8'>{post.postIntro}</p>
+
         <p className='text-[25px] lg:text-justify mt-8'>{post.postText}</p>
       </div>
       <div>
