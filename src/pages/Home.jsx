@@ -62,7 +62,7 @@ const Home = () => {
         Newest Posts
       </h1>
 
-      <div className='flex flex-col lg:flex-row justify-center gap-5 m-4 lg:m-20'>
+      <div className='flex flex-col justify-center gap-5 m-4 lg:m-20'>
         {postList.map((post) => {
           return <SinglePostIntro key={post.id} post={post} />
         })}

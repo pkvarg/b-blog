@@ -1,13 +1,18 @@
 import React, { useState, useEffect } from 'react'
+
 import { collection } from 'firebase/firestore'
 import { db } from './../firebaseConfig'
 import { SinglePost, NavbarSubSite } from '../components'
+import { useParams } from 'react-router-dom'
 
 const Blog = () => {
   const [postList, setPostList] = useState([])
   const [storedPosts, setStoredPosts] = useState([])
-  const postsCollectionRef = collection(db, 'posts')
   const [isAuth, setIsAuth] = useState()
+  const [currentPost, setCurrentPost] = useState([])
+  const postsCollectionRef = collection(db, 'posts')
+  const params = useParams()
+  const id = params.id
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('isAuth')
@@ -22,14 +27,20 @@ const Blog = () => {
       ? JSON.parse(localStorage.getItem('postList'))
       : []
     setStoredPosts(storagePosts)
-  }, [])
+    const postById = storagePosts.find((post) => post.id === id)
+    setCurrentPost(postById)
+  }, [id])
 
   return (
     <>
       <NavbarSubSite />
-      {storedPosts.map((post) => {
-        return <SinglePost key={post.id} post={post} isAuth={isAuth} />
-      })}
+      {!id ? (
+        storedPosts.map((post) => {
+          return <SinglePost key={post.id} post={post} isAuth={isAuth} />
+        })
+      ) : (
+        <SinglePost post={currentPost} isAuth={isAuth} />
+      )}
     </>
   )
 }

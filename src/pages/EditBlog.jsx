@@ -60,6 +60,7 @@ const EditBlog = () => {
   const editPost = (postId) => {
     const docRef = doc(db, 'posts', postId)
     const imageRef = ref(storage, imageName)
+
     if (image) {
       uploadBytes(imageRef, image)
         .then(() => {
@@ -81,6 +82,9 @@ const EditBlog = () => {
               console.log(error.message, 'error getting image url')
             })
           //setImage(null)
+          alert('Post updated w Img')
+          localStorage.removeItem('postList')
+          navigate('/')
         })
         .catch((error) => {
           console.log(error.message)
@@ -96,12 +100,13 @@ const EditBlog = () => {
             id: auth.currentUser.uid,
           },
         })
+        alert('Post updated no Img')
+        localStorage.removeItem('postList')
+        navigate('/')
       } catch (error) {
         console.log(error)
       }
     }
-
-    localStorage.removeItem('postList')
   }
 
   return (
