@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { getDocs, collection, doc, updateDoc } from 'firebase/firestore'
-import { db, auth } from './../firebaseConfig'
+import { doc, updateDoc } from 'firebase/firestore'
+import { db, auth, xauth } from './../firebaseConfig'
 import { storage } from './../firebaseConfig'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { toast } from 'react-hot-toast'
 
 import { useParams } from 'react-router-dom'
 
@@ -21,12 +22,10 @@ const EditBlog = () => {
   const [editedPost, setEditedPost] = useState([])
   const imageUrl = image ? URL.createObjectURL(image) : null
 
-  const postsCollectionRef = collection(db, 'posts')
-
   const navigate = useNavigate()
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem('isAuth')
+    const loggedIn = localStorage.getItem(xauth)
     if (loggedIn) {
       setIsAuth(loggedIn)
     } else if (!loggedIn) {
@@ -82,7 +81,8 @@ const EditBlog = () => {
               console.log(error.message, 'error getting image url')
             })
           //setImage(null)
-          alert('Post updated w Img')
+          //alert('Post updated w Img')
+          toast.success('Post with Image Updated')
           localStorage.removeItem('postList')
           navigate('/')
         })
@@ -100,7 +100,8 @@ const EditBlog = () => {
             id: auth.currentUser.uid,
           },
         })
-        alert('Post updated no Img')
+        //alert('Post updated no Img')
+        toast.success('Post Updated')
         localStorage.removeItem('postList')
         navigate('/')
       } catch (error) {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-
 import { collection } from 'firebase/firestore'
-import { db } from './../firebaseConfig'
+import { db, xauth } from './../firebaseConfig'
 import { SinglePost, NavbarSubSite } from '../components'
 import { useParams } from 'react-router-dom'
 
@@ -15,7 +14,7 @@ const Blog = () => {
   const id = params.id
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem('isAuth')
+    const loggedIn = localStorage.getItem(xauth)
     if (loggedIn) {
       setIsAuth(loggedIn)
     } else if (!loggedIn) {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { Navbar, SinglePostIntro } from '../components'
 import { Posts, Contact } from './../sections'
 import { useNavigate } from 'react-router-dom'
-import { db } from '../firebaseConfig'
+import { db, xauth } from '../firebaseConfig'
 import { facts } from './../assets/bibleFacts'
 
 import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore'
@@ -12,7 +12,7 @@ const Home = () => {
   const [isAuth, setIsAuth] = useState()
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem('isAuth')
+    const loggedIn = localStorage.getItem(xauth)
     if (loggedIn) {
       setIsAuth(loggedIn)
     } else if (!loggedIn) {
@@ -47,8 +47,6 @@ const Home = () => {
     getPosts()
   }, [deletePost])
 
-  console.log(facts)
-
   return (
     <>
       <Navbar />
@@ -66,15 +64,16 @@ const Home = () => {
       </h1> */}
 
       <div className='text-white flex flex-row justify-center mx-20 gap-10 mt-20'>
-        <div className=''>
+        <div className='text-white'>
           <h1 className='text-[37.5px] text-grey mt-15'>Some Bible Facts</h1>
+
           {facts.map((fact) => {
             return (
-              <div key={fact.title}>
+              <div key={fact.id}>
                 <p className='text-[30px] text-green mt-1'>{fact.title}</p>
-                {fact.points.map((point) => {
+                {fact.points.map((point, index) => {
                   return (
-                    <p className='text-[25px] text-left text-grey'>
+                    <p key={index} className='text-[25px] text-left text-grey'>
                       - {point.point}
                     </p>
                   )

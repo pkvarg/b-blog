@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
-import { auth, provider } from './../firebaseConfig'
+import { auth, provider, xauth } from './../firebaseConfig'
 import { signInWithPopup } from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-hot-toast'
 
 const Login = () => {
   const navigate = useNavigate()
@@ -10,12 +11,13 @@ const Login = () => {
   const signInWithGoogle = () => {
     signInWithPopup(auth, provider).then((result) => {
       if (result.user.email === import.meta.env.VITE_AUTH_EMAIL_2) {
-        localStorage.setItem('isAuth', true)
+        localStorage.setItem(xauth, true)
         setIsAuth(true)
+        toast.success('Logged in.')
         navigate('/')
       } else {
         navigate('/')
-        alert('Unauthorised user')
+        toast.error('Unauthorised user.')
       }
     })
   }

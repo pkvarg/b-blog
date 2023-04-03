@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Link } from 'react-scroll'
 import { signOut } from 'firebase/auth'
-import { auth } from './../firebaseConfig'
+import { auth, xauth } from './../firebaseConfig'
+import { toast } from 'react-hot-toast'
 
 const Navbar = () => {
   const [navbar, setNavbar] = useState(false)
@@ -12,7 +13,7 @@ const Navbar = () => {
   const location = useLocation()
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem('isAuth')
+    const loggedIn = localStorage.getItem(xauth)
     if (loggedIn) {
       setIsAuth(loggedIn)
     } else if (!loggedIn) {
@@ -26,6 +27,7 @@ const Navbar = () => {
     signOut(auth).then(() => {
       localStorage.clear()
       setIsAuth(false)
+      toast.success('Logged out.')
       //navigate('/')
     })
   }
@@ -33,12 +35,6 @@ const Navbar = () => {
   function toggleDropdown() {
     setIsOpen(!isOpen)
   }
-
-  const menuItems = [
-    { name: 'Home', href: '/' },
-    { name: 'About', href: '/about' },
-    { name: 'Contact', href: '/contact' },
-  ]
 
   return (
     <>

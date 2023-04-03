@@ -21,3 +21,4 @@ export const auth = getAuth(app)
 export const provider = new GoogleAuthProvider()
 export const db = getFirestore(app)
 export const storage = getStorage(app)
+export const xauth = import.meta.env.VITE_EMAIL_EXTRA_ONE

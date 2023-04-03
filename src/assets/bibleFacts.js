@@ -1,5 +1,6 @@
 export const facts = [
   {
+    id: '0001',
     title: 'The Bible is the only book that was:',
     points: [
       { point: 'Written over about a 1500 year span.' },
@@ -11,6 +12,7 @@ export const facts = [
     ],
   },
   {
+    id: '0002',
     title: 'The Most translated book:',
     points: [
       { point: 'Translated into more than 2,200 languages.' },
@@ -21,6 +23,7 @@ export const facts = [
     ],
   },
   {
+    id: '0003',
     title: 'The Bible is still here:',
     points: [
       { point: 'It withstood time, persecution and criticism.' },

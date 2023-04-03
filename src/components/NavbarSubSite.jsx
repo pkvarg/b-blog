@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-scroll'
 import { signOut } from 'firebase/auth'
-import { auth } from './../firebaseConfig'
+import { auth, xauth } from './../firebaseConfig'
 
 const NavbarSubSite = () => {
   const [navbar, setNavbar] = useState(false)
@@ -11,7 +10,7 @@ const NavbarSubSite = () => {
   const [isAuth, setIsAuth] = useState()
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem('isAuth')
+    const loggedIn = localStorage.getItem(xauth)
     if (loggedIn) {
       setIsAuth(loggedIn)
     } else if (!loggedIn) {

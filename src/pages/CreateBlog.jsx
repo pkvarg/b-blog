@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { addDoc, collection } from 'firebase/firestore'
-import { db, auth } from './../firebaseConfig'
+import { db, auth, xauth } from './../firebaseConfig'
 import { storage } from './../firebaseConfig'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 
@@ -15,7 +15,7 @@ const CreateBlog = () => {
   const [urlLink, setUrlLink] = useState('')
 
   useEffect(() => {
-    const loggedIn = localStorage.getItem('isAuth')
+    const loggedIn = localStorage.getItem(xauth)
     if (loggedIn) {
       setIsAuth(loggedIn)
     } else if (!loggedIn) {
