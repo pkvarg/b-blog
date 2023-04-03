@@ -3,6 +3,7 @@ import { Navbar, SinglePostIntro } from '../components'
 import { Posts, Contact } from './../sections'
 import { useNavigate } from 'react-router-dom'
 import { db } from '../firebaseConfig'
+import { facts } from './../assets/bibleFacts'
 
 import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore'
 
@@ -46,6 +47,8 @@ const Home = () => {
     getPosts()
   }, [deletePost])
 
+  console.log(facts)
+
   return (
     <>
       <Navbar />
@@ -58,12 +61,28 @@ const Home = () => {
 
       <Posts />
 
-      <h1 className='text-center text-white text-[50px] my-[125px]'>
+      {/* <h1 className='text-center text-white text-[50px] my-[125px]'>
         Newest Posts
-      </h1>
+      </h1> */}
 
-      <div className='text-white flex flex-row items-center justify-center lg:m-20'>
-        <div>Bible Facts</div>
+      <div className='text-white flex flex-row  justify-center lg:m-20'>
+        <div className='mt-20'>
+          <h1 className='text-[40px] text-grey my-2'>Some Bible Facts</h1>
+          {facts.map((fact) => {
+            return (
+              <div key={fact.title}>
+                <p className='text-[30px] text-green mt-1'>{fact.title}</p>
+                {fact.points.map((point) => {
+                  return (
+                    <p className='text-[25px] text-left text-grey'>
+                      - {point.point}
+                    </p>
+                  )
+                })}
+              </div>
+            )
+          })}
+        </div>
 
         <div className='flex flex-col justify-center gap-5 m-4 lg:m-20'>
           {postList.map((post) => {
