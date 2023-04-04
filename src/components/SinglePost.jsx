@@ -2,6 +2,7 @@ import React, { useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { deleteDoc, doc } from 'firebase/firestore'
 import { db } from './../firebaseConfig'
+import { toast } from 'react-hot-toast'
 
 const SinglePost = ({ post, isAuth }) => {
   const navigate = useNavigate()
@@ -9,7 +10,7 @@ const SinglePost = ({ post, isAuth }) => {
     const postDoc = doc(db, 'posts', id)
     await deleteDoc(postDoc)
     localStorage.removeItem('postList')
-    alert('Post deleted')
+    toast.success('Post deleted')
     navigate('/')
   }, [])
 
@@ -23,14 +24,14 @@ const SinglePost = ({ post, isAuth }) => {
       key={post.id}
     >
       <div className='p-8'>
-        <div className='flex items-center justify-center gap-8'>
+        <div className='flex flex-col lg:flex-row items-center justify-center gap-8'>
           <img src={post.url} className='w-[75px] h-[75px]' />
           <h1 className='text-[45px] text-center'>{post.title}</h1>
         </div>
 
-        <p className='text-[25px] lg:text-justify mt-8'>{post.postIntro}</p>
+        <p className='text-[25px] text-justify mt-8'>{post.postIntro}</p>
 
-        <p className='text-[25px] lg:text-justify mt-8'>{post.postText}</p>
+        <p className='text-[25px] text-justify mt-8'>{post.postText}</p>
       </div>
       <div>
         {isAuth && (

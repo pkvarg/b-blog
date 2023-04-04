@@ -79,6 +79,7 @@ const EditBlog = () => {
             })
             .catch((error) => {
               console.log(error.message, 'error getting image url')
+              toast.error(error.message, 'error getting image url')
             })
           //setImage(null)
           //alert('Post updated w Img')
@@ -88,6 +89,7 @@ const EditBlog = () => {
         })
         .catch((error) => {
           console.log(error.message)
+          toast.error(error.message)
         })
     } else {
       try {
@@ -106,6 +108,7 @@ const EditBlog = () => {
         navigate('/')
       } catch (error) {
         console.log(error)
+        toast.error(error)
       }
     }
   }

@@ -102,7 +102,7 @@ const Home = () => {
         Newest Posts
       </h1> */}
 
-      <div className='text-white flex flex-row justify-center mx-20 gap-10 mt-20'>
+      <div className='text-white flex flex-col lg:flex-row justify-center mx-4 lg:mx-20 gap-10 mt-20'>
         <div className='text-white'>
           <h1 className='text-[37.5px] text-grey mt-15'>Some Bible Facts</h1>
 

@@ -4,6 +4,7 @@ import { addDoc, collection } from 'firebase/firestore'
 import { db, auth, xauth } from './../firebaseConfig'
 import { storage } from './../firebaseConfig'
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
+import { toast } from 'react-hot-toast'
 
 const CreateBlog = () => {
   const navigate = useNavigate()
@@ -48,15 +49,17 @@ const CreateBlog = () => {
           })
           .catch((error) => {
             console.log(error.message, 'error getting image url')
+            toast.error(error.message, 'error getting image url')
           })
         //setImage(null)
+        localStorage.removeItem('postList')
+        toast.success('Post created.')
+        navigate('/')
       })
       .catch((error) => {
         console.log(error.message)
+        toast.error(error.message)
       })
-
-    localStorage.removeItem('postList')
-    navigate('/')
   }
 
   const handleImageChange = (e) => {
