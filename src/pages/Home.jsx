@@ -2,14 +2,56 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { Navbar, SinglePostIntro } from '../components'
 import { Posts, Contact } from './../sections'
 import { useNavigate } from 'react-router-dom'
+import { app } from './../firebaseConfig'
+import { getAnalytics } from 'firebase/analytics'
+import CookieConsent from 'react-cookie-consent'
 import { db, xauth } from '../firebaseConfig'
 import { facts } from './../assets/bibleFacts'
 
-import { getDocs, collection, deleteDoc, doc } from 'firebase/firestore'
+import {
+  getDocs,
+  collection,
+  updateDoc,
+  deleteDoc,
+  doc,
+} from 'firebase/firestore'
 
 const Home = () => {
   const navigate = useNavigate()
   const [isAuth, setIsAuth] = useState()
+  const [cookieAccept, setCookieAccept] = useState(false)
+  const [postList, setPostList] = useState([])
+  const postsCollectionRef = collection(db, 'posts')
+  const visitorsCollectionRef = collection(db, 'visitors')
+
+  // Initialize G-analytics on consent
+  if (cookieAccept) {
+    const analytics = getAnalytics(app)
+  }
+
+  const increaseVisitorsDeclined = async () => {
+    const data = await getDocs(visitorsCollectionRef)
+    const id = 'u4lLbTDSbBNqPCepDnP2'
+    const declinedInDb =
+      data.docs[0]._document.data.value.mapValue.fields.declined.integerValue
+    const increaseDeclined = Number(declinedInDb) + Number(1)
+    const docRef = doc(db, 'visitors', id)
+    updateDoc(docRef, {
+      declined: increaseDeclined,
+    })
+  }
+
+  const increaseVisitorsAgreed = async () => {
+    const data = await getDocs(visitorsCollectionRef)
+    const id = 'u4lLbTDSbBNqPCepDnP2'
+    const agreedInDb =
+      data.docs[0]._document.data.value.mapValue.fields.agreed.integerValue
+    const increaseAgreed = Number(agreedInDb) + Number(1)
+    const docRef = doc(db, 'visitors', id)
+    updateDoc(docRef, {
+      agreed: increaseAgreed,
+    })
+  }
 
   useEffect(() => {
     const loggedIn = localStorage.getItem(xauth)
@@ -21,9 +63,6 @@ const Home = () => {
       setIsAuth(false)
     }
   }, [])
-
-  const [postList, setPostList] = useState([])
-  const postsCollectionRef = collection(db, 'posts')
 
   const deletePost = useCallback(async (id) => {
     const postDoc = doc(db, 'posts', id)
@@ -91,6 +130,41 @@ const Home = () => {
       </div>
 
       <Contact />
+      <CookieConsent
+        location='bottom'
+        style={{
+          background: 'black',
+          color: 'grey',
+          fontSize: '22.5px',
+          textAlign: 'justify',
+        }}
+        buttonStyle={{
+          background: '#1d9f2f',
+          color: '#fff',
+          fontSize: '17.5px',
+        }}
+        buttonText='Agree'
+        expires={365}
+        enableDeclineButton
+        onDecline={() => {
+          setCookieAccept(false)
+          increaseVisitorsDeclined()
+        }}
+        declineButtonStyle={{
+          background: 'red',
+          color: '#fff',
+          fontSize: '17.5px',
+        }}
+        declineButtonText='Decline'
+        onAccept={() => {
+          setCookieAccept(true)
+          increaseVisitorsAgreed()
+        }}
+      >
+        This website uses analytical and operation necessary cookies. We use
+        neither functional nor marketing cookies.{' '}
+        {/* <a href='/gdpr'> GDPR</a> */}
+      </CookieConsent>
     </>
   )
 }

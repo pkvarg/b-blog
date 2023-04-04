@@ -1,6 +1,14 @@
 import React, { useRef, useState } from 'react'
 import emailjs from '@emailjs/browser'
 import Message from '../components/Message'
+import { db } from '../firebaseConfig'
+import {
+  getDocs,
+  collection,
+  updateDoc,
+  deleteDoc,
+  doc,
+} from 'firebase/firestore'
 
 const Contact = () => {
   const [message, setMessage] = useState(null)
@@ -11,9 +19,22 @@ const Contact = () => {
   const [phone, setPhone] = useState('')
   const [mailMessage, setMailMessage] = useState('')
   const [checkBox, setCheckBox] = useState(false)
+  const botsCollectionRef = collection(db, 'bots')
 
   const handleCheckBox = () => {
     setCheckBox((current) => !current)
+  }
+
+  const countBots = async () => {
+    const data = await getDocs(botsCollectionRef)
+    const id = 'hHa4Lr1BXh2ggUZkNKHf'
+    const botsInDb =
+      data.docs[0]._document.data.value.mapValue.fields.count.integerValue
+    const increaseBots = Number(botsInDb) + Number(1)
+    const docRef = doc(db, 'bots', id)
+    updateDoc(docRef, {
+      count: increaseBots,
+    })
   }
 
   const form = useRef()
@@ -32,7 +53,7 @@ const Contact = () => {
       setEmail('')
       setPhone('')
       setMailMessage('')
-      // increaseBots()
+      countBots()
 
       const element = document.getElementById('contact')
       element.scrollIntoView({ behavior: 'smooth' })
