@@ -162,11 +162,11 @@ const Navbar = () => {
                     )}
                   </li>
                 )}
-                {!isAuth && (
+                {/* {!isAuth && (
                   <li className='text-[2rem] hover:text-green'>
                     <a href={'/login'}>Login</a>
                   </li>
-                )}
+                )} */}
               </ul>
             </div>
           </div>

@@ -98,11 +98,17 @@ const Home = () => {
 
       <Posts />
 
-      {/* <h1 className='text-center text-white text-[50px] my-[125px]'>
+      <h1 className='text-center text-white text-[50px] my-[125px]'>
         Newest Posts
-      </h1> */}
+      </h1>
 
-      <div className='text-white flex flex-col lg:flex-row justify-center mx-4 lg:mx-20 gap-10 mt-20'>
+      <div className='text-white flex flex-col justify-center mx-4 lg:mx-20 gap-10 mt-20'>
+        <div className='flex flex-col justify-center gap-5'>
+          {postList.map((post) => {
+            return <SinglePostIntro key={post.id} post={post} />
+          })}
+        </div>
+
         <div className='text-white'>
           <h1 className='text-[37.5px] text-grey mt-15'>Some Bible Facts</h1>
 
@@ -119,12 +125,6 @@ const Home = () => {
                 })}
               </div>
             )
-          })}
-        </div>
-
-        <div className='flex flex-col justify-center gap-5'>
-          {postList.map((post) => {
-            return <SinglePostIntro key={post.id} post={post} />
           })}
         </div>
       </div>

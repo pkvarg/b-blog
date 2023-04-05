@@ -90,7 +90,7 @@ const Contact = () => {
 
   return (
     <>
-      <div className='flex flex-col lg:flex-row justify-between items-center gap-[80px]  mx-8 lg:mx-[75px] pt-40 pb-10'>
+      <div className='flex flex-col lg:flex-row justify-between items-center gap-[10%]  mx-8 lg:mx-[100px] pt-40 pb-10 mb-40'>
         <div className='text-white flex flex-col items-center'>
           <p className='text-justify text-[25px]'>
             On each side of the river stood the tree of life, bearing twelve
@@ -100,7 +100,7 @@ const Contact = () => {
           </p>
           <img
             src='/treeOfLife.png'
-            className='w-[75%] lg:w-[50%] mt-16'
+            className='w-[75%] lg:w-[37%] mt-16 lg:mt-[17.5%]'
             alt='tree of life'
           />
         </div>
@@ -195,7 +195,7 @@ const Contact = () => {
                       />
 
                       <label
-                        className='form-check-label text-[25px] lg:text-[30px] ml-[15px]'
+                        className='form-check-label text-[22.5px] lg:text-[30px] ml-[15px]'
                         htmlFor='flexCheckDefault'
                       >
                         I Agree with data collection
