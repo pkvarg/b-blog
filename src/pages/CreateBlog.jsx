@@ -48,7 +48,6 @@ const CreateBlog = () => {
             })
           })
           .catch((error) => {
-            console.log(error.message, 'error getting image url')
             toast.error(error.message, 'error getting image url')
           })
         //setImage(null)
@@ -57,7 +56,6 @@ const CreateBlog = () => {
         navigate('/')
       })
       .catch((error) => {
-        console.log(error.message)
         toast.error(error.message)
       })
   }

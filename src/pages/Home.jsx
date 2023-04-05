@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Navbar, SinglePostIntro } from '../components'
+import { toast } from 'react-hot-toast'
 import { Posts, Contact } from './../sections'
 import { useNavigate } from 'react-router-dom'
 import { app } from './../firebaseConfig'
@@ -80,7 +81,7 @@ const Home = () => {
           )
         )
       } catch (error) {
-        console.log(error)
+        toast.error(error)
       }
     }
     getPosts()

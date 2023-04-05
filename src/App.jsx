@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Home, Login, CreateBlog, Blog, EditBlog, Surveys } from './pages'
 import { Footer } from './components'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Toaster, toast } from 'react-hot-toast'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   return (
