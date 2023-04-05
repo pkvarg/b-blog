@@ -98,7 +98,7 @@ const Contact = () => {
             <span className='text-[17.5px]'>Rev 22:2</span>
           </p>
           <img
-            src='/treeOfLife.png'
+            src='/treeOfLife.webp'
             className='w-[75%] lg:w-[37%] mt-16 lg:mt-[17.5%]'
             alt='tree of life'
           />
