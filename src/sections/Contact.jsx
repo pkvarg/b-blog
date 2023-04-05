@@ -9,6 +9,7 @@ import {
   deleteDoc,
   doc,
 } from 'firebase/firestore'
+import { toast } from 'react-hot-toast'
 
 const Contact = () => {
   const [message, setMessage] = useState(null)
@@ -47,7 +48,8 @@ const Contact = () => {
     e.preventDefault()
 
     if (passwordGroupOne !== x || passwordGroupTwo !== y) {
-      setMessage('Error. Send us an email please.')
+      //setMessage('Error. Send us an email please.')
+      toast.error('Error. Send us an email please.')
       setName('')
       setSubject('')
       setEmail('')
@@ -68,13 +70,15 @@ const Contact = () => {
         .then(
           (result) => {
             console.log(result.text)
-            setMessageSuccess('Success. Message sent!')
+            //setMessageSuccess('Success. Message sent!')
+            toast.success('Success. Message sent!')
 
             console.log('message sent')
           },
           (error) => {
             console.log(error.text)
-            setMessageSuccess(error.text)
+            //setMessageSuccess(error.text)
+            toast.error(error.text)
           }
         )
 
