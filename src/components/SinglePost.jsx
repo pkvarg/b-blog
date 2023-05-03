@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { deleteDoc, doc } from 'firebase/firestore'
 import { db } from './../firebaseConfig'
 import { toast } from 'react-hot-toast'
+import LikeButton from './../components/LikeButton'
 
 const SinglePost = ({ post, isAuth }) => {
   const navigate = useNavigate()
@@ -23,7 +24,7 @@ const SinglePost = ({ post, isAuth }) => {
       className='bg-singlePostBlack text-white m-2 lg:m-10 rounded-xl relative'
       key={post.id}
     >
-      <div className='p-8'>
+      <div className='px-8 py-14'>
         <div className='flex flex-col lg:flex-row items-center justify-center gap-8'>
           <img src={post.url} className='w-[75px] h-[75px]' />
           <h1 className='text-[45px] text-center'>{post.title}</h1>
@@ -31,8 +32,10 @@ const SinglePost = ({ post, isAuth }) => {
 
         <p className='text-[25px] text-justify mt-8'>{post.postIntro}</p>
 
-        <p className='text-[25px] text-justify mt-8'>{post.postText}</p>
+        <p className='text-[25px] text-justify mt-8 mb-8'>{post.postText}</p>
+        <LikeButton id={post.id} />
       </div>
+
       <div>
         {isAuth && (
           <>
