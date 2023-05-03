@@ -7,16 +7,18 @@ const LikeButton = ({ id }) => {
   const [likeCount, setLikeCount] = useState()
 
   useEffect(() => {
-    const col = collection(db, 'posts')
-    const getLikes = async (id) => {
-      const data = await getDocs(col)
-      const filteredData = data.docs.filter((post) => post.id === id)
-      const likesInDB =
-        filteredData[0]._document.data.value.mapValue.fields.likes.integerValue
-      setLikeCount(likesInDB)
-    }
     getLikes(id)
-  }, [setLikeCount])
+  })
+
+  const getLikes = async (id) => {
+    const col = collection(db, 'posts')
+    const data = await getDocs(col)
+
+    const filteredData = data.docs.filter((post) => post.id === id)
+    const likesInDB =
+      filteredData[0]._document.data.value.mapValue.fields.likes.integerValue
+    setLikeCount(likesInDB)
+  }
 
   const handleLike = async () => {
     const likesRef = doc(db, 'posts', id)
